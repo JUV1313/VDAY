@@ -6,63 +6,209 @@
   <title>כרטיס ברכה לאבישג</title>
   <style>
     :root{
-      --bg1:#0b1020;
-      --bg2:#121a33;
-      --card:#0f1730cc;
-      --text:#eaf0ff;
-      --muted:#b7c5ff;
-      --yes:#27d17c;
-      --no:#ff4d6d;
+      --bg0:#050816;
+      --bg1:#08112a;
+      --bg2:#071a22;
+      --card:#0c1631cc;
+      --stroke:#2a3f7a88;
+      --text:#ecf3ff;
+      --muted:#b7c7ff;
+      --yes1:#2bf49b;
+      --yes2:#14b86e;
+      --no1:#ff6b8a;
+      --no2:#ff3b64;
+      --glowC:#37b7ff;
+      --glowG:#2dffad;
     }
+
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans Hebrew","Heebo",sans-serif;
       color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans Hebrew","Heebo",sans-serif;
       background:
-        radial-gradient(1200px 800px at 20% 20%, #1a2b7a55, transparent 60%),
-        radial-gradient(900px 700px at 80% 10%, #1d7a7a44, transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+        radial-gradient(1200px 700px at 18% 18%, #2b6cff2b, transparent 60%),
+        radial-gradient(900px 600px at 82% 20%, #00ffd02b, transparent 55%),
+        radial-gradient(900px 700px at 50% 120%, #a78bfa1c, transparent 60%),
+        linear-gradient(180deg, var(--bg0), #060a1a 45%, #040716 100%);
       overflow:hidden;
-      padding:24px;
     }
-    .card{
-      width:min(720px, 96vw);
-      border:1px solid #2a3a6b;
-      border-radius:24px;
-      background:linear-gradient(180deg, #0f1730dd, #0c1328dd);
-      box-shadow: 0 18px 60px #00000066;
-      padding:28px 22px;
+
+    /* רקע "פרימיום": גריין עדין */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.03),
+          rgba(255,255,255,0.03) 1px,
+          rgba(0,0,0,0) 2px,
+          rgba(0,0,0,0) 4px
+        );
+      mix-blend-mode:overlay;
+      opacity:0.08;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:28px 18px;
+    }
+
+    .shell{
+      width:min(860px, 96vw);
       position:relative;
     }
+
+    /* אור הילה סביב הכרטיס */
+    .shell::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      border-radius:34px;
+      background:
+        radial-gradient(420px 220px at 20% 10%, rgba(55,183,255,0.20), transparent 70%),
+        radial-gradient(420px 220px at 85% 20%, rgba(45,255,173,0.16), transparent 70%),
+        radial-gradient(520px 240px at 55% 115%, rgba(167,139,250,0.12), transparent 70%);
+      filter: blur(10px);
+      opacity:0.95;
+      z-index:0;
+    }
+
+    .card{
+      position:relative;
+      z-index:1;
+      border-radius:28px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(12,22,49,0.86), rgba(6,12,28,0.86));
+      box-shadow: 0 26px 80px rgba(0,0,0,0.60);
+      overflow:hidden;
+    }
+
+    /* "זכוכית" */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:28px;
+      background:
+        radial-gradient(600px 260px at 20% 10%, rgba(45,255,173,0.10), transparent 60%),
+        radial-gradient(520px 240px at 90% 15%, rgba(55,183,255,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00));
+      pointer-events:none;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      border-bottom:1px solid rgba(42,63,122,0.45);
+      background: rgba(4,8,20,0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+      opacity:0.95;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0) 70%),
+                  linear-gradient(180deg, rgba(55,183,255,0.9), rgba(45,255,173,0.9));
+      box-shadow:0 0 18px rgba(55,183,255,0.45);
+    }
+
+    .brand span{
+      font-weight:800;
+      letter-spacing:0.2px;
+      color:#eaf4ff;
+      font-size:13px;
+    }
+
+    .status{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color:rgba(183,199,255,0.95);
+      font-size:12px;
+    }
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(42,63,122,0.50);
+      background: rgba(8,16,36,0.35);
+      backdrop-filter: blur(10px);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pulse{
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(45,255,173,0.9);
+      box-shadow:0 0 16px rgba(45,255,173,0.55);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform:scale(1); opacity:0.8; }
+      50%{ transform:scale(1.4); opacity:1; }
+    }
+
+    .content{
+      padding:26px 22px 22px;
+    }
+
     .title{
-      font-size:clamp(22px, 3.2vw, 34px);
       margin:0 0 10px;
+      font-size:clamp(26px, 3.6vw, 40px);
+      line-height:1.1;
       letter-spacing:0.2px;
     }
+
     .subtitle{
       margin:0 0 22px;
       color:var(--muted);
-      line-height:1.5;
-      font-size:clamp(14px, 2vw, 18px);
+      line-height:1.6;
+      font-size:clamp(14px, 2.1vw, 18px);
+      max-width:52ch;
     }
+
     .stage{
       position:relative;
-      height:160px;
-      border-radius:18px;
-      border:1px dashed #2a3a6b;
-      background:linear-gradient(180deg, #0a1022aa, #0a102255);
+      height:190px;
+      border-radius:20px;
+      border:1px solid rgba(42,63,122,0.55);
+      background:
+        radial-gradient(520px 220px at 18% 30%, rgba(55,183,255,0.16), transparent 60%),
+        radial-gradient(520px 220px at 85% 35%, rgba(45,255,173,0.14), transparent 60%),
+        linear-gradient(180deg, rgba(7,12,26,0.72), rgba(5,9,22,0.48));
       overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
     }
-    .buttons{
+
+    .stageGrid{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity:0.12;
+      mask-image: radial-gradient(220px 140px at 50% 55%, rgba(0,0,0,1), transparent 70%);
+    }
+
+    .buttonsArea{
       position:relative;
       width:100%;
       height:100%;
@@ -70,111 +216,292 @@
       align-items:center;
       justify-content:center;
       gap:18px;
+      padding:16px;
     }
+
     button{
       border:0;
       border-radius:999px;
-      padding:14px 26px;
+      padding:14px 28px;
       font-size:18px;
       cursor:pointer;
-      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
       user-select:none;
-      font-weight:700;
+      font-weight:800;
+      letter-spacing:0.2px;
+      transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
     }
+
     #yesBtn{
-      background:linear-gradient(180deg, #35f08c, #1abf6e);
-      color:#082016;
-      box-shadow:0 10px 24px #00000055;
-      transform-origin:center;
+      background: linear-gradient(180deg, var(--yes1), var(--yes2));
+      color:#062316;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.10) inset;
+      position:relative;
     }
-    #yesBtn:hover{
-      filter:saturate(1.05);
+    #yesBtn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background: radial-gradient(180px 60px at 30% 20%, rgba(255,255,255,0.35), transparent 60%);
+      pointer-events:none;
+      opacity:0.8;
     }
-    /* "כן" גדל כשמתקרבים */
     #yesBtn.grow{
-      transform: scale(1.18);
-      box-shadow:0 14px 34px #00000066;
+      transform: scale(1.22);
+      filter:saturate(1.05);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.62), 0 0 30px rgba(45,255,173,0.18);
     }
 
     #noBtn{
-      background:linear-gradient(180deg, #ff6b86, #ff3d64);
+      background: linear-gradient(180deg, var(--no1), var(--no2));
       color:#2b0010;
-      box-shadow:0 10px 24px #00000055;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.10) inset;
       position:absolute;
       right:12%;
       top:50%;
-      transform:translateY(-50%);
+      transform: translateY(-50%);
+      will-change: left, top;
     }
 
     .hint{
       margin-top:14px;
-      color:#9fb2ff;
+      color: rgba(183,199,255,0.9);
       font-size:13px;
-      opacity:0.9;
+      opacity:0.95;
     }
 
-    .sparkle{
+    /* מסך שני */
+    .screen{
+      display:none;
+    }
+    .screen.active{
+      display:block;
+    }
+
+    .celebrateWrap{
+      min-height:calc(100vh - 0px);
+      display:grid;
+      place-items:center;
+      padding:28px 18px;
+    }
+
+    .celebrateCard{
+      width:min(860px, 96vw);
+      border-radius:28px;
+      border:1px solid rgba(30,80,120,0.55);
+      background:
+        radial-gradient(640px 280px at 20% 10%, rgba(56,189,248,0.18), transparent 60%),
+        radial-gradient(640px 280px at 85% 25%, rgba(34,197,94,0.16), transparent 60%),
+        linear-gradient(180deg, rgba(6,18,42,0.80), rgba(4,16,32,0.78));
+      box-shadow: 0 26px 90px rgba(0,0,0,0.60);
+      overflow:hidden;
+      position:relative;
+      text-align:center;
+    }
+
+    .celebrateCard::before{
+      content:"";
       position:absolute;
       inset:-2px;
-      border-radius:26px;
-      pointer-events:none;
       background:
-        radial-gradient(420px 120px at 15% 10%, #2dd4ff22, transparent 70%),
-        radial-gradient(420px 120px at 85% 10%, #34d39922, transparent 70%),
-        radial-gradient(520px 160px at 50% 120%, #a78bfa1f, transparent 70%);
-      filter:blur(0.2px);
+        radial-gradient(520px 220px at 15% 10%, rgba(34,211,238,0.16), transparent 70%),
+        radial-gradient(520px 220px at 85% 12%, rgba(45,255,173,0.12), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00));
+      pointer-events:none;
+    }
+
+    .celebrateInner{
+      position:relative;
+      z-index:2;
+      padding:30px 22px 26px;
+    }
+
+    .celebrateTitle{
+      margin:0 0 10px;
+      font-size:clamp(26px, 3.8vw, 44px);
+      letter-spacing:0.2px;
+    }
+    .celebrateText{
+      margin:0 auto 18px;
+      color:#bff7ff;
+      line-height:1.6;
+      font-size:clamp(14px, 2.2vw, 18px);
+      max-width:60ch;
+    }
+
+    .ducks{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      align-items:center;
+      font-size:clamp(38px, 6.4vw, 72px);
+      filter: drop-shadow(0 14px 22px rgba(0,0,0,0.55));
+      user-select:none;
+      margin-top:10px;
+    }
+    .duck{
+      animation: dance 950ms ease-in-out infinite;
+    }
+    .duck:nth-child(2){ animation-delay: 120ms; }
+    .duck:nth-child(3){ animation-delay: 240ms; }
+    .duck:nth-child(4){ animation-delay: 360ms; }
+    .duck:nth-child(5){ animation-delay: 480ms; }
+
+    @keyframes dance{
+      0%{ transform: translateY(0) rotate(0deg) scale(1); }
+      20%{ transform: translateY(-12px) rotate(-7deg) scale(1.04); }
+      50%{ transform: translateY(0) rotate(7deg) scale(1); }
+      80%{ transform: translateY(-9px) rotate(-4deg) scale(1.03); }
+      100%{ transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .miniRow{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .miniPill{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(30,80,120,0.55);
+      background: rgba(6,18,42,0.35);
+      color: rgba(220,250,255,0.92);
+      font-size:12px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      backdrop-filter: blur(10px);
+    }
+    .miniIcon{
+      width:9px;height:9px;border-radius:50%;
+      background: rgba(56,189,248,0.95);
+      box-shadow:0 0 16px rgba(56,189,248,0.35);
+    }
+
+    /* קונפטי */
+    .confetti{
+      position:fixed;
+      top:-18px;
+      width:10px;
+      height:14px;
+      opacity:0.95;
+      border-radius:2px;
+      animation: fall linear infinite;
+      z-index:5;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,0.55));
+      pointer-events:none;
+    }
+    @keyframes fall{
+      to{ transform: translateY(120vh) rotate(560deg); }
+    }
+
+    /* מעבר מסך */
+    .fadeOut{
+      animation: fadeOut 300ms ease forwards;
+    }
+    .fadeIn{
+      animation: fadeIn 420ms ease forwards;
+    }
+    @keyframes fadeOut{
+      to{ opacity:0; transform: translateY(6px) scale(0.99); }
+    }
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(8px) scale(0.99); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
     }
   </style>
 </head>
-<body>
-  <div class="card">
-    <div class="sparkle"></div>
-    <h1 class="title">שלום אבישג שרה קמחי,</h1>
-    <p class="subtitle">האם תהיי הוולנטיין שלי?</p>
 
-    <div class="stage" id="stage">
-      <div class="buttons" id="buttonsArea">
-        <button id="yesBtn" type="button">כן</button>
-        <button id="noBtn" type="button">לא</button>
+<body>
+  <!-- מסך 1 -->
+  <div class="wrap screen active" id="screen1">
+    <div class="shell">
+      <div class="card">
+        <div class="topbar">
+          <div class="brand">
+            <div class="dot" aria-hidden="true"></div>
+            <span>Valentine Protocol</span>
+          </div>
+          <div class="status">
+            <div class="pill"><span class="pulse" aria-hidden="true"></span><span>מצב: רומנטיקה מבוקרת</span></div>
+            <div class="pill">v1.0</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <h1 class="title">שלום אבישג שרה קמחי,</h1>
+          <p class="subtitle">יש לי בקשה אחת, חמודה וקצת בלתי נמנעת. האם תהיי הוולנטיין שלי?</p>
+
+          <div class="stage" id="stage">
+            <div class="stageGrid" aria-hidden="true"></div>
+            <div class="buttonsArea" id="buttonsArea">
+              <button id="yesBtn" type="button">כן</button>
+              <button id="noBtn" type="button">לא</button>
+            </div>
+          </div>
+
+          <div class="hint">כפתור "לא" עבר הדרכת התחמקות מתקדמת.</div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="hint">טיפ: נסי ללחוץ על "לא". בהצלחה עם זה.</div>
+  <!-- מסך 2 -->
+  <div class="celebrateWrap screen" id="screen2" aria-hidden="true">
+    <div class="celebrateCard fadeIn">
+      <div class="celebrateInner">
+        <h1 class="celebrateTitle">אוקיי, זה רשמי 😄</h1>
+        <p class="celebrateText">
+          לפי המדע: כשאבישג אומרת "כן", היקום נכנס למצב חגיגה מיידי.
+          תוצאה מובהקת ברמת ה, וואו.
+        </p>
+
+        <div class="ducks" aria-label="ברווזים רוקדים">
+          <span class="duck">🦆</span>
+          <span class="duck">🦆</span>
+          <span class="duck">🦆</span>
+          <span class="duck">🦆</span>
+          <span class="duck">🦆</span>
+        </div>
+
+        <div class="miniRow" aria-hidden="true">
+          <div class="miniPill"><span class="miniIcon"></span>קונפטי: פעיל</div>
+          <div class="miniPill"><span class="miniIcon" style="background:rgba(34,197,94,0.95);box-shadow:0 0 16px rgba(34,197,94,0.35)"></span>ברווזים: רוקדים</div>
+          <div class="miniPill"><span class="miniIcon" style="background:rgba(167,139,250,0.95);box-shadow:0 0 16px rgba(167,139,250,0.28)"></span>מצב רוח: גבוה</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
     const stage = document.getElementById('stage');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn  = document.getElementById('noBtn');
-    const area   = document.getElementById('buttonsArea');
 
-    // מיקום התחלתי "נוח"
-    placeNoButton(12, 50);
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
 
-    // "כן" גדל כשמתקרבים אליו
+    let confettiOn = false;
+    let confettiNodes = [];
+
+    // "כן" גדל כשמתקרבים
     yesBtn.addEventListener('mouseenter', () => yesBtn.classList.add('grow'));
     yesBtn.addEventListener('mouseleave', () => yesBtn.classList.remove('grow'));
 
-    // "לא" בורח כשמתקרבים עם העכבר (גם על hover וגם אם מתקרבים אליו)
+    // "לא" בורח
     noBtn.addEventListener('mouseenter', dodgeNoButton);
     stage.addEventListener('mousemove', (e) => {
       const rect = noBtn.getBoundingClientRect();
       const dx = e.clientX - (rect.left + rect.width / 2);
       const dy = e.clientY - (rect.top + rect.height / 2);
       const dist = Math.hypot(dx, dy);
-      if (dist < 90) dodgeNoButton();
+      if (dist < 95) dodgeNoButton();
     });
 
-    function placeNoButton(rightPct, topPct){
-      noBtn.style.right = rightPct + '%';
-      noBtn.style.left = 'auto';
-      noBtn.style.top = topPct + '%';
-      noBtn.style.transform = 'translateY(-50%)';
-    }
-
     function dodgeNoButton(){
-      const pad = 10;
-
+      const pad = 12;
       const stageRect = stage.getBoundingClientRect();
       const btnRect   = noBtn.getBoundingClientRect();
 
@@ -184,157 +511,59 @@
       const x = pad + Math.random() * Math.max(0, maxX);
       const y = pad + Math.random() * Math.max(0, maxY);
 
-      // משתמשים ב-left כדי להציב בתוך הבמה באופן מדויק
       noBtn.style.left = x + 'px';
       noBtn.style.right = 'auto';
       noBtn.style.top = y + 'px';
       noBtn.style.transform = 'none';
     }
 
-    // לחיצה על "כן" פותחת חלון חדש עם קונפטי כחול-ירוק וברווזים רוקדים
+    // מעבר למסך חגיגות
     yesBtn.addEventListener('click', () => {
-      const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=650');
-      if (!w) {
-        alert('נראה שהדפדפן חסם חלונות קופצים. אפשר לאפשר פופ-אפים ואז ללחוץ שוב על "כן".');
-        return;
-      }
+      // מעבר קטן וחלק
+      screen1.classList.add('fadeOut');
 
-      const html = `
-<!doctype html>
-<html lang="he" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>יאאאא!</title>
-  <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      overflow:hidden;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans Hebrew","Heebo",sans-serif;
-      background:
-        radial-gradient(900px 600px at 15% 20%, #1fc7ff44, transparent 60%),
-        radial-gradient(900px 600px at 85% 25%, #34d39944, transparent 55%),
-        linear-gradient(180deg, #06122a, #041024);
-      color:#eaffff;
-    }
-    .center{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      text-align:center;
-      padding:24px;
-      z-index:2;
-    }
-    .card{
-      background:linear-gradient(180deg, #0b1b38cc, #06162ecc);
-      border:1px solid #1e3a6a;
-      border-radius:28px;
-      padding:26px 22px;
-      box-shadow:0 18px 60px #00000066;
-      max-width:min(720px, 92vw);
-    }
-    h1{
-      margin:0 0 10px;
-      font-size:clamp(22px, 3.5vw, 36px);
-    }
-    p{
-      margin:0 0 18px;
-      color:#bff7ff;
-      line-height:1.5;
-      font-size:clamp(14px, 2.2vw, 18px);
-    }
-    .ducks{
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      align-items:center;
-      font-size:clamp(34px, 6vw, 64px);
-      filter: drop-shadow(0 10px 18px #00000066);
-      user-select:none;
-    }
-    .duck{
-      animation: dance 900ms ease-in-out infinite;
-    }
-    .duck:nth-child(2){ animation-delay: 120ms; }
-    .duck:nth-child(3){ animation-delay: 240ms; }
-    .duck:nth-child(4){ animation-delay: 360ms; }
-    .duck:nth-child(5){ animation-delay: 480ms; }
+      setTimeout(() => {
+        screen1.classList.remove('active');
+        screen1.style.display = 'none';
 
-    @keyframes dance{
-      0%{ transform: translateY(0) rotate(0deg) scale(1); }
-      25%{ transform: translateY(-10px) rotate(-6deg) scale(1.03); }
-      50%{ transform: translateY(0) rotate(6deg) scale(1); }
-      75%{ transform: translateY(-8px) rotate(-3deg) scale(1.02); }
-      100%{ transform: translateY(0) rotate(0deg) scale(1); }
-    }
+        screen2.classList.add('active');
+        screen2.style.display = 'grid';
+        screen2.setAttribute('aria-hidden','false');
 
-    /* קונפטי */
-    .confetti{
-      position:absolute;
-      top:-12px;
-      width:10px;
-      height:14px;
-      opacity:0.95;
-      border-radius:2px;
-      animation: fall linear infinite;
-      z-index:1;
-      filter: drop-shadow(0 6px 8px #00000055);
-    }
-    @keyframes fall{
-      to{
-        transform: translateY(120vh) rotate(520deg);
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="center">
-    <div class="card">
-      <h1>אוקיי, זה רשמי 😄</h1>
-      <p>כמו מדע טוב: ניסוי הצליח, תוצאה מובהקת, p&lt;.001.</p>
-      <div class="ducks" aria-label="ברווזים רוקדים">
-        <span class="duck">🦆</span>
-        <span class="duck">🦆</span>
-        <span class="duck">🦆</span>
-        <span class="duck">🦆</span>
-        <span class="duck">🦆</span>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const colors = [
-      "#34d399", "#22c55e", "#2dd4bf",
-      "#38bdf8", "#22d3ee", "#60a5fa"
-    ];
-
-    const COUNT = 140;
-    for (let i = 0; i < COUNT; i++){
-      const c = document.createElement("div");
-      c.className = "confetti";
-      const sizeW = 6 + Math.random() * 10;
-      const sizeH = 8 + Math.random() * 14;
-      c.style.width = sizeW + "px";
-      c.style.height = sizeH + "px";
-      c.style.left = (Math.random() * 100) + "vw";
-      c.style.background = colors[Math.floor(Math.random() * colors.length)];
-      c.style.animationDuration = (2.2 + Math.random() * 3.4) + "s";
-      c.style.animationDelay = (-Math.random() * 4) + "s";
-      c.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
-      document.body.appendChild(c);
-    }
-  <\/script>
-</body>
-</html>
-      `.trim();
-
-      w.document.open();
-      w.document.write(html);
-      w.document.close();
+        // הדלקת קונפטי
+        startConfetti();
+      }, 290);
     });
+
+    function startConfetti(){
+      if (confettiOn) return;
+      confettiOn = true;
+
+      const colors = [
+        "#34d399", "#22c55e", "#2dd4bf",
+        "#38bdf8", "#22d3ee", "#60a5fa"
+      ];
+
+      const COUNT = 170;
+      for (let i = 0; i < COUNT; i++){
+        const c = document.createElement("div");
+        c.className = "confetti";
+
+        const w = 6 + Math.random() * 10;
+        const h = 8 + Math.random() * 16;
+        c.style.width = w + "px";
+        c.style.height = h + "px";
+
+        c.style.left = (Math.random() * 100) + "vw";
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (2.2 + Math.random() * 3.6) + "s";
+        c.style.animationDelay = (-Math.random() * 4.2) + "s";
+        c.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
+
+        document.body.appendChild(c);
+        confettiNodes.push(c);
+      }
+    }
   </script>
 </body>
 </html>
